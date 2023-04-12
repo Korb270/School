@@ -13,10 +13,9 @@ public class FirstProgram {
 //        double b = 6;
 //        System.out.println("Площадь прямоугольника со сторонами " + a + " и " + b + " = " + area(a, b));
 
-//        Point p1 = new Point(3, 5);
-//        Point p2 = new Point(3, 6);
-        Point p = new Point(3, 5, 3, 6);
-        System.out.println("Расстояние между точками равно " + p.distance());
+        Point p1 = new Point(3, 5);
+        Point p2 = new Point(3, 6);
+        System.out.println("Расстояние между точками равно " + p1.distance(p2));
     }
 
 //    public static void hello(String somebody) {
