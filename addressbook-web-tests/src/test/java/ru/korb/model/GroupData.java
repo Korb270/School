@@ -1,4 +1,4 @@
-package ru.korb;
+package ru.korb.model;
 
 public class GroupData {
     private final String name;
