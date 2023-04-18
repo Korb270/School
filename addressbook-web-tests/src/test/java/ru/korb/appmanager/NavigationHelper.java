@@ -16,4 +16,8 @@ public class NavigationHelper extends BaseHelper {
     public void openContactPage() {
         click(By.linkText("home"));
     }
+
+    public void approveAlert(){
+        wd.switchTo().alert().accept();
+    }
 }
