@@ -45,4 +45,28 @@ public class ContactHelper extends BaseHelper {
     public void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
+
+    public void initContactEdit() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitContactModification() {
+        click(By.xpath("//input[22]"));
+    }
+
+    public void returnToContactPage() {
+        click(By.linkText("home page"));
+    }
+
+    public void deleteContactInEdit() {
+        click(By.xpath("//form[2]/input[2]"));
+    }
+
+    public void initContactDetails() {
+        click(By.xpath("//img[@alt='Details']"));
+    }
+
+    public void initContactEditInDetils() {
+        click(By.name("modifiy"));
+    }
 }

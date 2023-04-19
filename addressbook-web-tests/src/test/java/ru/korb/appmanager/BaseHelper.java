@@ -1,9 +1,6 @@
 package ru.korb.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
 public class BaseHelper {
@@ -18,12 +15,16 @@ public class BaseHelper {
     }
 
     protected void type(By locator, String text) {
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        if (isElementPresent(locator)) {
+            WebElement element = wd.findElement(locator);
+            element.clear();
+            element.sendKeys(text);
+        }
     }
 
     protected void select(By locator, String text) {
-        new Select(wd.findElement(locator)).selectByVisibleText(text);
+        if (isElementPresent(locator))
+            new Select(wd.findElement(locator)).selectByVisibleText(text);
     }
 
     public boolean isElementPresent(By by) {
