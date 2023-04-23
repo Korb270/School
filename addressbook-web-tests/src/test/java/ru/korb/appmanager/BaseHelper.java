@@ -17,8 +17,13 @@ public class BaseHelper {
     protected void type(By locator, String text) {
         if (isElementPresent(locator)) {
             WebElement element = wd.findElement(locator);
-            element.clear();
-            element.sendKeys(text);
+            if (text != null) {
+                String existingText = element.getAttribute("value");
+                if (!text.equals(existingText)) {
+                    element.clear();
+                    element.sendKeys(text);
+                }
+            }
         }
     }
 
