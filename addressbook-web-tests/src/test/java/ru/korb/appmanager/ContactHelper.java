@@ -29,7 +29,6 @@ public class ContactHelper extends BaseHelper {
         select(By.name("bday"), contactData.getBday());
         select(By.name("bmonth"), contactData.getBmonth());
         type(By.name("byear"), contactData.getByear());
-        select(By.name("new_group"), contactData.getNew_group());
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
     }
@@ -58,6 +57,10 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("home page"));
     }
 
+    private void returnContactPage() {
+        click(By.linkText("home"));
+    }
+
     public void deleteContactInEdit() {
         click(By.xpath("//form[2]/input[2]"));
     }
@@ -68,5 +71,16 @@ public class ContactHelper extends BaseHelper {
 
     public void initContactEditInDetils() {
         click(By.name("modifiy"));
+    }
+
+    public void createContact(ContactData contact) {
+        initContactCreation();
+        fillContactForm(contact);
+        submitContactCreation();
+        returnContactPage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
