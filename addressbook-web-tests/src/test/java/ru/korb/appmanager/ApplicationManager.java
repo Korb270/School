@@ -2,6 +2,9 @@ package ru.korb.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Browser;
 
 import java.time.Duration;
 
@@ -12,10 +15,23 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private Browser browser;
+
+    public ApplicationManager(Browser browser) {
+
+        this.browser = browser;
+    }
 
     public void init() {
-        System.setProperty("webdriver.chrome.driver", "C:/Program Files/ChromeDriver/chromedriver.exe");
-        wd = new ChromeDriver();
+        if (browser.equals(Browser.CHROME)) {
+           // System.setProperty("webdriver.chrome.driver", "C:/Program Files/ChromeDriver/chromedriver.exe");
+            wd = new ChromeDriver();
+        } else if (browser.equals(Browser.EDGE)) {
+            wd = new EdgeDriver();
+        } else if (browser.equals(Browser.IE)) {
+            wd = new InternetExplorerDriver();
+        }
+
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         wd.get("http://localhost:8080/addressbook/");
         groupHelper = new GroupHelper(wd);
