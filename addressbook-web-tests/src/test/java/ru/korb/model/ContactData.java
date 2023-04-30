@@ -100,4 +100,12 @@ public class ContactData {
     public String getPhone2() {
         return phone2;
     }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstname='" + firstname + '\'' +
+                '}';
+    }
+
 }

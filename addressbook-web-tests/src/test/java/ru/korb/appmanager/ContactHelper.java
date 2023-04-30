@@ -2,7 +2,11 @@ package ru.korb.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.korb.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends BaseHelper {
 
@@ -37,16 +41,16 @@ public class ContactHelper extends BaseHelper {
         click(By.linkText("add new"));
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void initContactEdit() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initContactEdit(int index) {
+        wd.findElements(By.cssSelector("img[title=\"Edit\"]")).get(index).click();
     }
 
     public void submitContactModification() {
@@ -65,8 +69,8 @@ public class ContactHelper extends BaseHelper {
         click(By.xpath("//form[2]/input[2]"));
     }
 
-    public void initContactDetails() {
-        click(By.xpath("//img[@alt='Details']"));
+    public void initContactDetails(int index) {
+        wd.findElements(By.xpath("//img[@alt='Details']")).get(index).click();
     }
 
     public void initContactEditInDetils() {
@@ -82,5 +86,16 @@ public class ContactHelper extends BaseHelper {
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.cssSelector("td.center"));
+        for (WebElement element: elements){
+            String name = element.getAttribute("alt");
+            ContactData group = new ContactData(element.getAttribute("alt"), null, null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+            contacts.add(group);
+        }
+        return contacts;
     }
 }
