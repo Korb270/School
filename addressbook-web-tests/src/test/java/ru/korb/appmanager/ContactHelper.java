@@ -50,7 +50,7 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void initContactEdit(int index) {
-        wd.findElements(By.cssSelector("img[title=\"Edit\"]")).get(index).click();
+        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
     public void submitContactModification() {
@@ -90,10 +90,13 @@ public class ContactHelper extends BaseHelper {
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("td.center"));
+        List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
-            String name = element.getAttribute("alt");
-            ContactData group = new ContactData(element.getAttribute("alt"), null, null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+            String firstName = element.findElement(By.xpath("td[3]")).getText();
+            String lastName = element.findElement(By.xpath("td[2]")).getText();
+            String address = element.findElement(By.xpath("td[4]")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData group = new ContactData(id, firstName , null, lastName,null,null,address,null,null,null,null,null,null,null,null,null,null);
             contacts.add(group);
         }
         return contacts;
