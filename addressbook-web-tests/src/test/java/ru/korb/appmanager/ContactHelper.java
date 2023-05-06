@@ -6,9 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.korb.model.ContactData;
 import ru.korb.model.Contacts;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends BaseHelper {
 
@@ -88,6 +86,7 @@ public class ContactHelper extends BaseHelper {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
+        contactCache = null;
         returnContactPage();
     }
 
@@ -101,6 +100,7 @@ public class ContactHelper extends BaseHelper {
         initContactEditById(contact.getId());
         fillContactForm(contact);
         submitContactModification();
+        contactCache = null;
         returnToContactPage();
     }
 
@@ -108,30 +108,41 @@ public class ContactHelper extends BaseHelper {
         selectContactById(contact.getId());
         deleteSelectedContact();
         approveAlert();
+        contactCache = null;
         contactPage();
     }
 
     public void deleteInEdit(ContactData contact) {
         initContactEditById(contact.getId());
         deleteContactInEdit();
+        contactCache = null;
         contactPage();
+    }
+
+    public int count() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null){
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
             String firstName = element.findElement(By.xpath("td[3]")).getText();
             String lastName = element.findElement(By.xpath("td[2]")).getText();
             String address = element.findElement(By.xpath("td[4]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName).withAddress(address));
+            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName).withAddress(address));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
 
