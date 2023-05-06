@@ -9,7 +9,7 @@ public class NavigationHelper extends BaseHelper {
         super(wd);
     }
 
-    public void gotoGroupPage() {
+    public void groupPage() {
         if (isElementPresent(By.tagName("h1"))
                 && wd.findElement(By.tagName("h1")).getText().equals("Groups")
                 && isElementPresent(By.name("new"))) {
@@ -18,14 +18,12 @@ public class NavigationHelper extends BaseHelper {
         click(By.linkText("groups"));
     }
 
-    public void openContactPage() {
+    public void contactPage() {
         if (isElementPresent(By.name("maintable"))){
             return;
         }
         click(By.linkText("home"));
     }
 
-    public void approveAlert() {
-        wd.switchTo().alert().accept();
-    }
+
 }

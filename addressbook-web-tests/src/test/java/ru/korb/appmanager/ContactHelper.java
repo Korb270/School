@@ -77,18 +77,48 @@ public class ContactHelper extends BaseHelper {
         click(By.name("modifiy"));
     }
 
-    public void createContact(ContactData contact) {
+    public void approveAlert() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void create(ContactData contact) {
         initContactCreation();
         fillContactForm(contact);
         submitContactCreation();
         returnContactPage();
     }
 
+    public void contactPage() {
+        if (isElementPresent(By.name("maintable"))){
+            return;
+        }
+        click(By.linkText("home"));
+    }
+    public void modify(int index, ContactData contact) {
+        initContactEdit(index);
+        fillContactForm(contact);
+        submitContactModification();
+        returnToContactPage();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        deleteSelectedContact();
+        approveAlert();
+        contactPage();
+    }
+
+    public void deleteInEdit(int index) {
+        initContactEdit(index);
+        deleteContactInEdit();
+        contactPage();
+    }
+
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element: elements){
@@ -96,8 +126,7 @@ public class ContactHelper extends BaseHelper {
             String lastName = element.findElement(By.xpath("td[2]")).getText();
             String address = element.findElement(By.xpath("td[4]")).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData group = new ContactData(id, firstName , null, lastName,null,null,address,null,null,null,null,null,null,null,null,null,null);
-            contacts.add(group);
+            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName).withAddress(address));
         }
         return contacts;
     }
