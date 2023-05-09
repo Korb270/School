@@ -18,6 +18,27 @@ public class ContactData {
     private String byear;
     private String address2;
 
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
+    }
+
+    public String getAllEmails() {
+        return allEmails;
+    }
+
+    public ContactData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
+    }
+
+    private String allPhones;
+    private String allEmails;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
