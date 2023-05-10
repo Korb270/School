@@ -30,6 +30,7 @@ public class ContactHelper extends BaseHelper {
         type(By.name("work"), contactData.getWork());
         type(By.name("email"), contactData.getEmail());
         type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
         select(By.name("bday"), contactData.getBday());
         select(By.name("bmonth"), contactData.getBmonth());
         type(By.name("byear"), contactData.getByear());
@@ -162,7 +163,8 @@ public class ContactHelper extends BaseHelper {
         String address = wd.findElement(By.name("address")).getAttribute("value");
         String email = wd.findElement(By.name("email")).getAttribute("value");
         String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
-        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withHome(home).withMobile(mobile).withWork(work).withPhone2(phone2).withAddress(address).withEmail(email).withEmail2(email2);
+        return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withHome(home).withMobile(mobile).withWork(work).withPhone2(phone2).withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
     }
 }

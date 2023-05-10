@@ -13,10 +13,13 @@ public class ContactData {
     private String work;
     private String email;
     private String email2;
+    private String email3;
     private String bday;
     private String bmonth;
     private String byear;
     private String address2;
+    private String allPhones;
+    private String allEmails;
 
     public String getAllPhones() {
         return allPhones;
@@ -34,31 +37,6 @@ public class ContactData {
     public ContactData withAllEmails(String allEmails) {
         this.allEmails = allEmails;
         return this;
-    }
-
-    private String allPhones;
-    private String allEmails;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (id != that.id) return false;
-        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-        return address != null ? address.equals(that.address) : that.address == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        return result;
     }
 
     public ContactData withId(int id) {
@@ -118,6 +96,11 @@ public class ContactData {
 
     public ContactData withEmail2(String email2) {
         this.email2 = email2;
+        return this;
+    }
+
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
         return this;
     }
 
@@ -196,6 +179,10 @@ public class ContactData {
         return email2;
     }
 
+    public String getEmail3() {
+        return email3;
+    }
+
     public String getBday() {
         return bday;
     }
@@ -214,6 +201,28 @@ public class ContactData {
 
     public String getPhone2() {
         return phone2;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        return address != null ? address.equals(that.address) : that.address == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        return result;
     }
 
     @Override
