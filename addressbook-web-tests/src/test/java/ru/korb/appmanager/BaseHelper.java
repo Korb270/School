@@ -3,6 +3,8 @@ package ru.korb.appmanager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+
 public class BaseHelper {
     protected WebDriver wd;
 
@@ -25,6 +27,15 @@ public class BaseHelper {
                 }
             }
         }
+    }
+
+    protected void attach(By locator, File file) {
+        if (isElementPresent(locator)) {
+            WebElement element = wd.findElement(locator);
+            if (file != null) {
+                element.sendKeys(file.getAbsolutePath());
+                }
+            }
     }
 
     protected void select(By locator, String text) {
