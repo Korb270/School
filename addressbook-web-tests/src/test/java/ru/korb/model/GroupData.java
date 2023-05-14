@@ -1,9 +1,15 @@
 package ru.korb.model;
 
+import com.google.gson.annotations.Expose;
+
 public class GroupData {
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String name;
+    @Expose
     private String header;
+    @Expose
+    private String footer;
 
     public GroupData withId(int id) {
         this.id = id;
@@ -25,7 +31,7 @@ public class GroupData {
         return this;
     }
 
-    private String footer;
+
 
     public int getId() {
         return id;

@@ -3,7 +3,7 @@ package ru.korb.model;
 import java.io.File;
 
 public class ContactData {
-    private int id = Integer.MAX_VALUE;
+    private transient int id = Integer.MAX_VALUE;
     private String firstname;
     private String middlename;
     private String lastname;
@@ -23,6 +23,7 @@ public class ContactData {
     private String allPhones;
     private String allEmails;
     private File photo;
+    private String phone2;
 
     public File getPhoto() {
         return photo;
@@ -141,7 +142,7 @@ public class ContactData {
         return this;
     }
 
-    private String phone2;
+
 
     public String getFirstname() {
         return firstname;
