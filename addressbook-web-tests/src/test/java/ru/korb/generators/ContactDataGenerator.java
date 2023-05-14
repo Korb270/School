@@ -52,18 +52,18 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
-        Writer writer = new FileWriter(file);
-        for (ContactData contact:contacts){
-            writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",contact.getFirstname(),contact.getMiddlename(), contact.getLastname(), contact.getNickname(),contact.getPhoto(), contact.getCompany(), contact.getAddress(), contact.getHome(), contact.getMobile()
-            , contact.getWork(), contact.getEmail(), contact.getEmail2(), contact.getEmail3(), contact.getBday(), contact.getBmonth(), contact.getByear(), contact.getAddress2(), contact.getPhone2()));
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact:contacts){
+                writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s;%s\n",contact.getFirstname(),contact.getMiddlename(), contact.getLastname(), contact.getNickname(),contact.getPhoto(), contact.getCompany(), contact.getAddress(), contact.getHome(), contact.getMobile()
+                        , contact.getWork(), contact.getEmail(), contact.getEmail2(), contact.getEmail3(), contact.getBday(), contact.getBmonth(), contact.getByear(), contact.getAddress2(), contact.getPhone2()));
+            }
         }
-        writer.close();
     }
 
     private List<ContactData> generateContacts(int count) {
