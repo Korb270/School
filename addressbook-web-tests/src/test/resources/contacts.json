@@ -16,9 +16,7 @@
     "bmonth": "March",
     "byear": "1968",
     "address2": "Kudrovo",
-    "photo": {
-      "path": "src\\test\\resources\\Bin.png"
-    },
+    "photo": "src\\test\\resources\\Bin.png",
     "phone2": "363-15-43"
   },
   {
@@ -38,9 +36,7 @@
     "bmonth": "May",
     "byear": "1993",
     "address2": "Shushary",
-    "photo": {
-      "path": "src\\test\\resources\\Vin.jpg"
-    },
+    "photo": "src\\test\\resources\\Vin.jpg",
     "phone2": "256-52-81"
   },
   {
@@ -60,9 +56,7 @@
     "bmonth": "July",
     "byear": "1972",
     "address2": "Sosnovo",
-    "photo": {
-      "path": "src\\test\\resources\\Santa.jpg"
-    },
+    "photo": "src\\test\\resources\\Santa.jpg",
     "phone2": "832-68-42"
   },
   {
@@ -82,9 +76,7 @@
     "bmonth": "November",
     "byear": "1988",
     "address2": "Tosno",
-    "photo": {
-      "path": "src\\test\\resources\\Brus.jpg"
-    },
+    "photo": "src\\test\\resources\\Brus.jpg",
     "phone2": "478-53-27"
   }
 ]
