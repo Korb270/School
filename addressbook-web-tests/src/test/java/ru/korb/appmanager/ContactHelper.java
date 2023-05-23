@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.korb.model.ContactData;
 import ru.korb.model.Contacts;
+import ru.korb.model.GroupData;
 
 import java.util.List;
 
@@ -46,6 +47,10 @@ public class ContactHelper extends BaseHelper {
 
     public void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[id='" + id + "']")).click();
+    }
+
+    public void selectGroupById(int id) {
+        wd.findElement(By.xpath("//select[@name='to_group']/option[@value='"+id+"']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -114,6 +119,18 @@ public class ContactHelper extends BaseHelper {
         contactPage();
     }
 
+    public void contactAddGroup(ContactData contact, GroupData group) {
+        contactPage();
+        selectContactById(contact.getId());
+        selectGroupById(group.getId());
+        click(By.name("add"));
+        homeWithGroup(group);
+    }
+
+    public void homeWithGroup(GroupData group) {
+        wd.findElement(By.xpath("//a[@href='./?group="+ group.getId()+"']")).click();
+    }
+
     public void deleteInEdit(ContactData contact) {
         initContactEditById(contact.getId());
         deleteContactInEdit();
@@ -168,4 +185,6 @@ public class ContactHelper extends BaseHelper {
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).withHome(home).withMobile(mobile).withWork(work).withPhone2(phone2).withAddress(address).withEmail(email).withEmail2(email2).withEmail3(email3);
     }
+
+
 }
