@@ -23,7 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestBase {
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    protected static final ApplicationManager app = new ApplicationManager(Browser.CHROME);
+    protected static final ApplicationManager app = new ApplicationManager(Browser.EDGE);
 
     @BeforeSuite
     public void setUp() throws Exception {

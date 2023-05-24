@@ -1,33 +1,50 @@
 package ru.korb.tests;
 
-import org.junit.Before;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.korb.model.ContactData;
+import ru.korb.model.Contacts;
 import ru.korb.model.GroupData;
+import ru.korb.model.Groups;
 
-public class ContactAddGroupTests extends TestBase{
+import java.io.File;
 
-    @Before
-    public void ensurePrecondition (){
-        if (app.db().contacts().size() == 0){
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+public class ContactAddGroupTests extends TestBase {
+
+    @BeforeMethod
+    public void ensurePrecondition() {
+        if (app.db().contacts().size() == 0) {
             app.goTo().contactPage();
-            app.contact().create(new ContactData().withFirstname("Ivan").withMiddlename("Ivanovich").withLastname("Ivanov").withNickname("Korb").withCompany("Sber").withAddress("Saint-Petersburg").withHome("777-77-77").withMobile("8-911-111-22-33").withWork("999-99-99").withEmail("korb@yandex.ru").withEmail2("korb@sber.ru").withBday("3").withBmonth("March").withByear("1988").withAddress2("Kudrovo").withPhone2("123-45-67"));
+            File photo = new File("src/test/resources/Bin.png");
+            app.contact().create(new ContactData().withFirstname("Ivan").withMiddlename("Ivanovich").withLastname("Ivanov").withNickname("Korb").withPhoto(photo).withCompany("Sber").withAddress("Saint-Petersburg").withHome("777-77-77").withMobile("8-911-111-22-33").withWork("999-99-99").withEmail("korb@yandex.ru").withEmail2("korb@sber.ru").withBday("3").withBmonth("March").withByear("1988").withAddress2("Kudrovo").withPhone2("123-45-67"));
         }
-        if (app.db().groups().size() == 0){
+        if (app.db().groups().size() == 0) {
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("test5").withHeader("test21").withFooter("test32"));
         }
     }
 
     @Test
-    public void testContactAddGroup(){
+    public void testContactAddGroup() {
+        Contacts contacts = app.db().contacts();
+        Groups groups = app.db().groups();
+        ContactData contWithOutGroup = new ContactData();
+        for (ContactData contact : contacts) {
+            if (contact.getGroups().size() < groups.size()) {
+                contWithOutGroup = contact;
+                break;
+            }
+        }
+        GroupData groupNoCont = app.contact().getAbsentGroup(groups, contWithOutGroup);
+        app.contact().contactAddGroup(contWithOutGroup, groupNoCont);
+        ContactData finalContWithOutGroup = contWithOutGroup;
+        ContactData after = app.db().contacts().stream().filter((x) -> x.getId() == finalContWithOutGroup.getId()).findFirst().orElse(null);
+        assertThat(after.getGroups(), equalTo(contWithOutGroup.getGroups().withAdded(groupNoCont)));
 
-        ContactData contact = app.db().contacts().iterator().next();
-        GroupData group = app.db().groups().iterator().next();
-        app.contact().contactAddGroup(contact, group);
 
-
-        System.out.println("123");
     }
 
 

@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.korb.model.ContactData;
 import ru.korb.model.Contacts;
 import ru.korb.model.GroupData;
+import ru.korb.model.Groups;
 
 import java.util.List;
 
@@ -50,7 +51,11 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void selectGroupById(int id) {
-        wd.findElement(By.xpath("//select[@name='to_group']/option[@value='"+id+"']")).click();
+        wd.findElement(By.xpath("//select[@name='to_group']/option[@value='" + id + "']")).click();
+    }
+
+    private void selectFilterGroupById(int id) {
+        wd.findElement(By.xpath("//select[@name='group']/option[@value='" + id + "']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -98,11 +103,12 @@ public class ContactHelper extends BaseHelper {
     }
 
     public void contactPage() {
-        if (isElementPresent(By.name("maintable"))){
+        if (isElementPresent(By.name("maintable"))) {
             return;
         }
         click(By.linkText("home"));
     }
+
     public void modify(ContactData contact) {
         initContactEditById(contact.getId());
         fillContactForm(contact);
@@ -127,8 +133,63 @@ public class ContactHelper extends BaseHelper {
         homeWithGroup(group);
     }
 
+
+    public void contactRemoveGroup(ContactData contact, GroupData group) {
+        contactPage();
+        selectFilterGroupById(group.getId());
+        selectContactById(contact.getId());
+        click(By.name("remove"));
+        homeWithGroup(group);
+    }
+
+
+
+    public GroupData getAbsentGroup(Groups groups, ContactData contWithOutGroup) {
+        boolean isPresentGroup;
+        GroupData groupNoCont = new GroupData();
+        for (GroupData group : groups) {
+            isPresentGroup = false;
+            for (GroupData groupInCont : contWithOutGroup.getGroups()) {
+                if (groupInCont.getId() == group.getId())
+                    isPresentGroup = true;
+            }
+            if (!isPresentGroup) {
+                groupNoCont = group;
+                break;
+            }
+        }
+        return groupNoCont;
+    }
+
+    public GroupData getFillGroup(Groups groups, ContactData contWithGroup) {
+        boolean isPresentGroup;
+        GroupData groupWithCont = new GroupData();
+        for (GroupData group : groups) {
+            isPresentGroup = false;
+            for (GroupData groupInCont : contWithGroup.getGroups()) {
+                if (groupInCont.getId() == group.getId())
+                    isPresentGroup = true;
+            }
+            if (isPresentGroup) {
+                groupWithCont = group;
+                break;
+            }
+        }
+        return groupWithCont;
+    }
+
+    public boolean isGroupPresentContact(Contacts contacts) {
+        for (ContactData contact : contacts) {
+            if (contact.getGroups().size() != 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void homeWithGroup(GroupData group) {
-        wd.findElement(By.xpath("//a[@href='./?group="+ group.getId()+"']")).click();
+        wd.findElement(By.xpath("//a[@href='./?group=" + group.getId() + "']")).click();
     }
 
     public void deleteInEdit(ContactData contact) {
@@ -149,12 +210,12 @@ public class ContactHelper extends BaseHelper {
     private Contacts contactCache = null;
 
     public Contacts all() {
-        if (contactCache != null){
+        if (contactCache != null) {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
         List<WebElement> rows = wd.findElements(By.name("entry"));
-        for (WebElement row: rows){
+        for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
             int id = Integer.parseInt(cells.get(0).findElement(By.tagName("input")).getAttribute("value"));
             String firstName = cells.get(2).getText();
