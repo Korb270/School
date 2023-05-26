@@ -133,6 +133,17 @@ public class ContactHelper extends BaseHelper {
         homeWithGroup(group);
     }
 
+    public ContactData getContactData(Contacts contacts, Groups groups) {
+        ContactData contWithOutGroup = new ContactData();
+        for (ContactData contact : contacts) {
+            if (contact.getGroups().size() < groups.size()) {
+                contWithOutGroup = contact;
+                break;
+            }
+        }
+        return contWithOutGroup;
+    }
+
 
     public void contactRemoveGroup(ContactData contact, GroupData group) {
         contactPage();
