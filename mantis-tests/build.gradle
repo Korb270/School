@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation 'org.testng:testng:7.3.0'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.8.2'
+    implementation group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+}
+
+test {
+    useTestNG {
+        suites 'src/test/resources/testng-groups.xml'
+    }
+    if (project.hasProperty('target')){
+        systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty('verifyUI')){
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+}
