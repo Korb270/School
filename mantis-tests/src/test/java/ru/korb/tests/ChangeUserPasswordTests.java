@@ -35,7 +35,7 @@ public class ChangeUserPasswordTests extends TestBase{
         UserData user = app.db().users().iterator().next();
         app.admin().changeUserPass(user);
         String password = String.format("pass%s", now);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 20000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, user.getEmail());
         app.registration().finish(confirmationLink, password);
         HttpSession session = app.newSession();
