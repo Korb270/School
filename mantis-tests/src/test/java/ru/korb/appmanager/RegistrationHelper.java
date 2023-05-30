@@ -21,4 +21,12 @@ public class RegistrationHelper extends BaseHelper {
         type(By.name("password_confirm"), password);
         click(By.xpath("//span/button/span"));
     }
+
+    public void regUserInAdmin(String username,String realname, String email) {
+        wd.get(app.getProperty("web.baseUrl") + "/manage_user_create_page.php");
+        type(By.name("username"), username);
+        type(By.name("realname"), realname);
+        type(By.name("email"), email);
+        click(By.cssSelector("input[value='Создать']"));
+    }
 }
