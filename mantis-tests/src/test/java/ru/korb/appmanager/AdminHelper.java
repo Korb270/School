@@ -18,7 +18,7 @@ public class AdminHelper extends BaseHelper {
     }
 
     public void changeUserPass(UserData user) {
-        click(By.xpath("//li[6]/a/i"));
+        click(By.xpath("//li[7]/a/i"));
         click(By.xpath("//a[contains(text(),'Управление пользователями')]"));
         click(By.xpath("//a[contains(text(),'"+ user.getUsername() +"')]"));
         click(By.cssSelector("input[value='Сбросить пароль']"));

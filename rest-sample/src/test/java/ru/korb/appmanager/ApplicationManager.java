@@ -17,13 +17,7 @@ public class ApplicationManager {
     private WebDriver wd;
 
     private Browser browser;
-    private RegistrationHelper registrationHelper;
-    private AdminHelper admin;
-    private FtpHelper ftp;
-    private MailHelper mailHelper;
-    private JamesHelper jamesHelper;
-    private DbHelper dbHelper;
-    private SoapHelper soapHelper;
+    private IssueHelper issue;
 
 
     public ApplicationManager(Browser browser) {
@@ -34,8 +28,6 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
-        dbHelper = new DbHelper();
     }
 
 
@@ -45,34 +37,20 @@ public class ApplicationManager {
         }
     }
 
-    public HttpSession newSession(){
-        return new HttpSession(this);
-    }
-
     public String getProperty(String key) {
         return  properties.getProperty(key);
     }
 
-    public RegistrationHelper registration() {
-        if (registrationHelper == null) {
-            registrationHelper = new RegistrationHelper(this);
+
+
+    public IssueHelper issue() {
+        if (issue == null) {
+            issue = new IssueHelper(this);
         }
-        return registrationHelper;
+        return issue;
     }
 
-    public AdminHelper admin() {
-        if (admin == null) {
-            admin = new AdminHelper(this);
-        }
-        return admin;
-    }
 
-    public FtpHelper ftp(){
-        if (ftp == null) {
-            ftp = new FtpHelper(this);
-        }
-        return ftp;
-    }
 
     public WebDriver getDriver() {
         if (wd == null){
@@ -88,30 +66,5 @@ public class ApplicationManager {
             wd.get(properties.getProperty("web.baseUrl"));
         }
         return wd;
-    }
-
-    public MailHelper mail(){
-        if (mailHelper == null){
-            mailHelper = new MailHelper(this);
-        }
-        return mailHelper;
-    }
-
-    public JamesHelper james(){
-        if (jamesHelper == null){
-            jamesHelper = new JamesHelper(this);
-        }
-        return jamesHelper;
-    }
-
-    public DbHelper db () {
-        return dbHelper;
-    }
-
-    public SoapHelper soap(){
-        if (soapHelper == null){
-            soapHelper = new SoapHelper(this);
-        }
-        return soapHelper;
     }
 }
