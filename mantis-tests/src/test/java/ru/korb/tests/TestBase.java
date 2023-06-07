@@ -26,9 +26,9 @@ public class TestBase {
         IssueData issue = app.soap().getIssues(issueId);
         String status = issue.getStatus().getName();
         if (status.equals("resolved") || status.equals("closed")){
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, javax.xml.rpc.ServiceException, RemoteException {

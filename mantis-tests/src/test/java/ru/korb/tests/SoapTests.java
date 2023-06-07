@@ -17,7 +17,7 @@ public class SoapTests extends TestBase {
     @BeforeMethod
     public void ensurePrecondition () throws MalformedURLException, com.google.protobuf.ServiceException, ServiceException, RemoteException {
         int issueId = 2;
-        if (!isIssueOpen(issueId)){
+        if (isIssueOpen(issueId)){
             skipIfNotFixed(issueId);
         }
     }
